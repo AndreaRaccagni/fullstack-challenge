@@ -1,9 +1,8 @@
 :root {
   color: #1f2933;
-  background:
-    radial-gradient(circle at top left, rgba(214, 179, 102, 0.28), transparent 28%),
+  background: radial-gradient(circle at top left, rgba(214, 179, 102, 0.28), transparent 28%),
     linear-gradient(180deg, #f6f1e8 0%, #efe4d1 100%);
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-family: 'Avenir Next', 'Segoe UI', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -18,7 +17,7 @@ body {
 }
 
 button,
-input {
+input select {
   font: inherit;
 }
 
@@ -46,7 +45,7 @@ input {
 
 .hero h1 {
   margin: 0 0 12px;
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', serif;
   font-size: clamp(2rem, 4vw, 3.5rem);
   line-height: 1.05;
 }
@@ -87,7 +86,7 @@ input {
   min-height: 42px;
 }
 
-.filters input {
+.filters input .filters select {
   padding: 10px 12px;
   border: 1px solid rgba(31, 41, 51, 0.18);
   border-radius: 10px;

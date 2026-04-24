@@ -47,6 +47,17 @@ export function App(): JSX.Element {
     };
   }, [appliedFilters]);
 
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchProducts({ activeOnly: false, category: '', maxPrice: '' })
+      .then((all) => {
+        const unique = [...new Set(all.map((p) => p.category))].sort();
+        setCategories(unique);
+      })
+      .catch(() => {});
+  }, []);
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     setAppliedFilters(draftFilters);
@@ -58,9 +69,8 @@ export function App(): JSX.Element {
         <p className="eyebrow">Jewelry Catalog</p>
         <h1>Small full-stack signal, backend-first exercise.</h1>
         <p className="hero-copy">
-          This UI is intentionally tiny. It lets you exercise the catalog endpoint, toggle the
-          active filter, try the basic query params, and see the product field surface grow when
-          the exercise is completed.
+          This UI is intentionally tiny. It lets you exercise the catalog endpoint, toggle the active filter, try the
+          basic query params, and see the product field surface grow when the exercise is completed.
         </p>
       </section>
 
@@ -82,17 +92,22 @@ export function App(): JSX.Element {
 
           <label>
             Category
-            <input
+            <select
+              value={draftFilters.category}
               onChange={(event) =>
                 setDraftFilters((current) => ({
                   ...current,
                   category: event.target.value,
                 }))
               }
-              placeholder="rings"
-              type="text"
-              value={draftFilters.category}
-            />
+            >
+              <option value="">All</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label>
