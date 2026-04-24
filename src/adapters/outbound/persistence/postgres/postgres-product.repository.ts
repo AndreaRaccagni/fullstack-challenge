@@ -18,7 +18,7 @@ interface ProductRow extends QueryResultRow {
 export class PostgresProductRepository implements ProductRepositoryPort {
   constructor(
     @Inject(DatabaseService)
-    private readonly databaseService: DatabaseService,
+    private readonly databaseService: DatabaseService
   ) {}
 
   async findAll(criteria: ListProductsCriteria): Promise<Product[]> {
@@ -30,8 +30,17 @@ export class PostgresProductRepository implements ProductRepositoryPort {
       whereClauses.push(`is_active = $${values.length}`);
     }
 
-    const whereStatement =
-      whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
+    if (criteria.category) {
+      values.push(criteria.category);
+      whereClauses.push(`category = $${values.length}`);
+    }
+
+    if (criteria.maxPrice) {
+      values.push(criteria.maxPrice);
+      whereClauses.push(`price <= $${values.length}`);
+    }
+
+    const whereStatement = whereClauses.length > 0 ? `WHERE ${whereClauses.join(' AND ')}` : '';
 
     const result = await this.databaseService.query<ProductRow>(
       `
@@ -40,7 +49,7 @@ export class PostgresProductRepository implements ProductRepositoryPort {
         ${whereStatement}
         ORDER BY created_at DESC
       `,
-      values,
+      values
     );
 
     return result.rows.map(mapProductRow);
@@ -53,7 +62,7 @@ export class PostgresProductRepository implements ProductRepositoryPort {
         VALUES ($1, $2, $3, $4)
         RETURNING id, name, category, price, is_active, created_at
       `,
-      [input.name, input.category, input.price, input.isActive],
+      [input.name, input.category, input.price, input.isActive]
     );
 
     return mapProductRow(result.rows[0]);
@@ -67,9 +76,6 @@ function mapProductRow(row: ProductRow): Product {
     category: row.category,
     price: Number(row.price),
     isActive: row.is_active,
-    createdAt:
-      row.created_at instanceof Date
-        ? row.created_at.toISOString()
-        : new Date(row.created_at).toISOString(),
+    createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : new Date(row.created_at).toISOString(),
   };
 }

@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsOptional } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ListProductsQueryDto {
   @IsOptional()
@@ -24,4 +24,12 @@ export class ListProductsQueryDto {
   })
   @IsBoolean()
   activeOnly?: boolean;
+
+  @IsOptional()
+  @IsString()
+  category?: string;
+
+  @IsOptional()
+  @IsNumber()
+  maxPrice?: number;
 }
