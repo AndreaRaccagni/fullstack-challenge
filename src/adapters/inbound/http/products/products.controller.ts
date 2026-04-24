@@ -12,13 +12,13 @@ export class ProductsController {
     @Inject(ListProductsUseCase)
     private readonly listProductsUseCase: ListProductsUseCase,
     @Inject(CreateProductUseCase)
-    private readonly createProductUseCase: CreateProductUseCase,
+    private readonly createProductUseCase: CreateProductUseCase
   ) {}
 
   @Get()
   listProducts(@Query() query: ListProductsQueryDto): Promise<Product[]> {
     return this.listProductsUseCase.execute({
-      activeOnly: query.activeOnly ?? false,
+      activeOnly: query.activeOnly ?? true,
     });
   }
 
