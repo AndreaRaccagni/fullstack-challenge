@@ -22,7 +22,7 @@ export class ProductsController {
     return this.listProductsUseCase.execute({
       activeOnly,
       category: query.category,
-      maxPrice: query.maxPrice,
+      maxPrice: query.maxPrice !== undefined ? Number(query.maxPrice) : undefined,
     });
   }
 
