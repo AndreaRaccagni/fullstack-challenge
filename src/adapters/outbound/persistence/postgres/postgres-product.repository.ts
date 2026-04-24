@@ -12,6 +12,7 @@ interface ProductRow extends QueryResultRow {
   price: string;
   is_active: boolean;
   created_at: Date | string;
+  stock: number;
 }
 
 @Injectable()
@@ -44,7 +45,7 @@ export class PostgresProductRepository implements ProductRepositoryPort {
 
     const result = await this.databaseService.query<ProductRow>(
       `
-        SELECT id, name, category, price, is_active, created_at
+        SELECT id, name, category, price, is_active, created_at, stock
         FROM products
         ${whereStatement}
         ORDER BY created_at DESC
@@ -58,11 +59,11 @@ export class PostgresProductRepository implements ProductRepositoryPort {
   async create(input: CreateProduct): Promise<Product> {
     const result = await this.databaseService.query<ProductRow>(
       `
-        INSERT INTO products (name, category, price, is_active)
-        VALUES ($1, $2, $3, $4)
-        RETURNING id, name, category, price, is_active, created_at
+        INSERT INTO products (name, category, price, is_active, stock)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, name, category, price, is_active, created_at, stock
       `,
-      [input.name, input.category, input.price, input.isActive]
+      [input.name, input.category, input.price, input.isActive, input.stock]
     );
 
     return mapProductRow(result.rows[0]);
@@ -77,5 +78,6 @@ function mapProductRow(row: ProductRow): Product {
     price: Number(row.price),
     isActive: row.is_active,
     createdAt: row.created_at instanceof Date ? row.created_at.toISOString() : new Date(row.created_at).toISOString(),
+    stock: row.stock,
   };
 }

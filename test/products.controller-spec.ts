@@ -17,6 +17,7 @@ const seededProducts: Product[] = [
     price: 129,
     isActive: true,
     createdAt: '2025-01-11T09:00:00.000Z',
+    stock: 10,
   },
   {
     id: 2,
@@ -25,6 +26,7 @@ const seededProducts: Product[] = [
     price: 175,
     isActive: false,
     createdAt: '2025-01-15T12:00:00.000Z',
+    stock: 20,
   },
   {
     id: 3,
@@ -33,6 +35,7 @@ const seededProducts: Product[] = [
     price: 99,
     isActive: true,
     createdAt: '2025-01-17T11:10:00.000Z',
+    stock: 30,
   },
   {
     id: 4,
@@ -41,6 +44,7 @@ const seededProducts: Product[] = [
     price: 72,
     isActive: true,
     createdAt: '2025-01-20T13:05:00.000Z',
+    stock: 40,
   },
 ];
 
