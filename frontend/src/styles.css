@@ -17,7 +17,8 @@ body {
 }
 
 button,
-input select {
+input,
+select {
   font: inherit;
 }
 
@@ -86,7 +87,8 @@ input select {
   min-height: 42px;
 }
 
-.filters input .filters select {
+.filters input,
+.filters select {
   padding: 10px 12px;
   border: 1px solid rgba(31, 41, 51, 0.18);
   border-radius: 10px;
